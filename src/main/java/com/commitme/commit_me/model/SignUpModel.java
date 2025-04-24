@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
-public class SignUpController {
+public class SignUpModel {
 
     @Entity
     @Table(name = "signUp")
