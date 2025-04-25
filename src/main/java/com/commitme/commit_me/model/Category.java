@@ -12,7 +12,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table
+@Table (name="category")
 public class Category {
     
     @Id

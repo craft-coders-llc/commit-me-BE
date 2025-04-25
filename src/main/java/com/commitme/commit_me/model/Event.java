@@ -1,5 +1,144 @@
 package com.commitme.commit_me.model;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table (name="event")
+
 public class Event {
     
+    @Id
+    @SequenceGenerator(name = "event_id_sequence", sequenceName = "event_id_sequence", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_id_sequence")
+    private Integer id;
+
+    @Column
+    @NotBlank(message = "(!) ERROR: el campo del título no puede estar vacío")
+    @Size(max=50, message = "(!) ERROR: el campo del título no puede tener más de 50 caracteres")
+    @Pattern(regexp = "^[^\\/*<>|]$", message = "(!) ERROR: no está permitido el uso de ciertos caracteres especiales")
+    private String title;
+
+    @Column
+    @NotBlank(message = "(!) ERROR: el campo de la descripción no puede estar vacío")
+    @Size(max=500, message = "(!) ERROR: el campo del título no puede tener más de 500 caracteres")
+    private String description;
+
+    @Column
+    @NotBlank(message = "(!) ERROR: el campo de fecha no pude estar vacío")
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private Date date;
+
+    @Column
+    @NotBlank(message = "(!) ERROR: el campo de hora no pude estar vacío")
+    @JsonFormat(pattern = "00:00")
+    private Time time;
+
+    @Column
+    @NotBlank(message = "(!) ERROR: el campo de la dirección no puede estar vacío")
+    @Size(max=100, message = "(!) ERROR: el campo de la dirección no puede tener más de 100 caracteres")
+    private String venue;
+
+    @Column
+    private String image;
+
+    @CreationTimestamp
+    private LocalDateTime created_on;
+
+    @UpdateTimestamp
+    private LocalDateTime updated_on;
+
+    public Event(){
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getDate() {
+        return this.date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Time getTime() {
+        return this.time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+
+    public String getVenue() {
+        return this.venue;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
+
+    public String getImage() {
+        return this.image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public LocalDateTime getCreated_on() {
+        return this.created_on;
+    }
+
+    public void setCreated_on(LocalDateTime created_on) {
+        this.created_on = created_on;
+    }
+
+    public LocalDateTime getUpdated_on() {
+        return this.updated_on;
+    }
+
+    public void setUpdated_on(LocalDateTime updated_on) {
+        this.updated_on = updated_on;
+    }
+
+
 }
