@@ -1,10 +1,11 @@
 package com.commitme.commit_me.model;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -26,7 +27,9 @@ public class Category {
     @Pattern(regexp = "^[^\\/*<>|]+$", message = "(!) ERROR: No está permitido el uso de caracteres especiales")
     private String type;
 
-    ///AÑADIR RELACIÓN CON EVENT!
+    @OneToMany
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
     
     public Category(){}
 

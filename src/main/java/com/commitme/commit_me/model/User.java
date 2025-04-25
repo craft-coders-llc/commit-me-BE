@@ -1,9 +1,13 @@
 package com.commitme.commit_me.model;
+import java.util.List;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -11,7 +15,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class UserModel {
+
 
     @Entity
     @Table(name = "users")
@@ -38,6 +42,14 @@ public class UserModel {
 
         @Column
         String imagePath = "path/to/your/image.jpg";
+
+        
+        @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<Event> events;
+
+        
+        @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<SignUp> signUps;
 
         public User() {
         }
@@ -84,4 +96,4 @@ public class UserModel {
 
     }
 
-}
+

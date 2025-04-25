@@ -1,14 +1,18 @@
 package com.commitme.commit_me.model;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
-public class SignUpModel {
+
 
     @Entity
     @Table(name = "signUp")
@@ -20,6 +24,14 @@ public class SignUpModel {
 
         @CreationTimestamp
         private LocalDateTime created_on;
+
+        @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "user_id")
+        private List<User> user;
+
+        @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "event_id")
+        private List<Event> events;
 
         public SignUp () {
         }
@@ -41,4 +53,3 @@ public class SignUpModel {
         }
         
     }
-}
