@@ -1,4 +1,5 @@
 package com.commitme.commit_me.model;
+
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDateTime;
@@ -6,14 +7,15 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -21,10 +23,10 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table (name="event")
+@Table(name = "event")
 
 public class Event {
-    
+
     @Id
     @SequenceGenerator(name = "event_id_sequence", sequenceName = "event_id_sequence", allocationSize = 1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_id_sequence")
@@ -32,13 +34,13 @@ public class Event {
 
     @Column
     @NotBlank(message = "(!) ERROR: el campo del título no puede estar vacío")
-    @Size(max=50, message = "(!) ERROR: el campo del título no puede tener más de 50 caracteres")
+    @Size(max = 50, message = "(!) ERROR: el campo del título no puede tener más de 50 caracteres")
     @Pattern(regexp = "^[^\\/*<>|]$", message = "(!) ERROR: no está permitido el uso de ciertos caracteres especiales")
     private String title;
 
     @Column
     @NotBlank(message = "(!) ERROR: el campo de la descripción no puede estar vacío")
-    @Size(max=500, message = "(!) ERROR: el campo del título no puede tener más de 500 caracteres")
+    @Size(max = 500, message = "(!) ERROR: el campo del título no puede tener más de 500 caracteres")
     private String description;
 
     @Column
@@ -53,30 +55,43 @@ public class Event {
 
     @Column
     @NotBlank(message = "(!) ERROR: el campo de la dirección no puede estar vacío")
-    @Size(max=100, message = "(!) ERROR: el campo de la dirección no puede tener más de 100 caracteres")
+    @Size(max = 100, message = "(!) ERROR: el campo de la dirección no puede tener más de 100 caracteres")
     private String venue;
 
     @Column
     private String image;
 
     @CreationTimestamp
-    private LocalDateTime created_on;
+    private LocalDateTime eventCreated_on;
 
     @UpdateTimestamp
-    private LocalDateTime updated_on;
+    private LocalDateTime eventUpdated_on;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id", nullable = true)
     private Category category;
 
-    @OneToOne(mappedBy = "events")
+    @ManyToMany(mappedBy = "signUp_id", cascade = CascadeType.ALL)
     private List<SignUp> signUps;
 
-    public Event(){
+    public Category getCategory() {
+        return this.category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getId() {
@@ -135,21 +150,15 @@ public class Event {
         this.image = image;
     }
 
-    public LocalDateTime getCreated_on() {
-        return this.created_on;
+    public LocalDateTime getEventUpdated_on() {
+        return this.eventUpdated_on;
     }
 
-    public void setCreated_on(LocalDateTime created_on) {
-        this.created_on = created_on;
+    public void setEventUpdated_on(LocalDateTime eventUpdated_on) {
+        this.eventUpdated_on = eventUpdated_on;
     }
 
-    public LocalDateTime getUpdated_on() {
-        return this.updated_on;
+    public Event() {
     }
-
-    public void setUpdated_on(LocalDateTime updated_on) {
-        this.updated_on = updated_on;
-    }
-
 
 }

@@ -1,4 +1,5 @@
 package com.commitme.commit_me.model;
+
 import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -6,8 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -15,85 +16,79 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @SequenceGenerator(name = "user_id_sequence", sequenceName = "user_id_sequence", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_sequence")
+    private Integer id;
 
+    @Column
+    @NotBlank(message = "[ERROR!] El campo de nombre no puede estar vacio y tampoco tener espacios")
+    @Pattern(regexp = "^[^\\/:*?\\\"<>|]+$", message = "[ERROR!] No está permitido el uso de caracteres especiales")
+    @Size(max = 20, message = "[ERROR!] Máximo de 20 caracteres permitidos en este campo")
+    private String userName;
 
-    @Entity
-    @Table(name = "users")
-    public class User {
-        @Id
-        @SequenceGenerator(name = "user_id_sequence", sequenceName = "user_id_sequence", allocationSize = 1, initialValue = 1)
-        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_sequence")
-        private Integer id;
+    @Column
+    @Email(message = "[ERROR!] Por favor, ingrese un formato válido de email")
+    @NotBlank(message = "[ERROR!] El campo de email no puede estar vacio y tampoco tener espacios")
+    @Size(max = 50, message = "[ERROR!] Máximo de 50 caracteres permitidos en este campo")
+    private String email;
 
-        @Column        
-        @NotBlank(message = "[ERROR!] El campo de nombre no puede estar vacio y tampoco tener espacios")
-        @Pattern(regexp = "^[^\\/:*?\\\"<>|]+$", message = "[ERROR!] No está permitido el uso de caracteres especiales")
-        @Size(max = 20, message = "[ERROR!] Máximo de 20 caracteres permitidos en este campo")
-        private String userName;
+    @Column
+    private String password;
 
-        @Column
-        @Email(message = "[ERROR!] Por favor, ingrese un formato válido de email")
-        @NotBlank(message = "[ERROR!] El campo de email no puede estar vacio y tampoco tener espacios")
-        @Size(max = 50, message = "[ERROR!] Máximo de 50 caracteres permitidos en este campo")
-        private String email;
+    @Column
+    String imagePath = "path/to/your/image.jpg";
 
-        @Column
-        private String password;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Event> events;
 
-        @Column
-        String imagePath = "path/to/your/image.jpg";
+    @ManyToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<SignUp> signUps;
 
-        
-        @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-        private List<Event> events;
-
-        
-        @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-        private List<SignUp> signUps;
-
-        public User() {
-        }
-
-        public Integer getId() {
-            return this.id;
-        }
-    
-        public void setId(Integer id) {
-            this.id = id;
-        }
-    
-        public String getName() {
-            return this.userName;
-        }
-    
-        public void setName(String userName) {
-            this.userName = userName;
-        }
-    
-        public String getEmail() {
-            return this.email;
-        }
-    
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getPassword() {
-            return this.password;
-        }
-    
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public String getImagePath() {
-            return this.imagePath;
-        }
-    
-        public void setImagePath(String imagePath) {
-            this.imagePath = imagePath;
-        }
-
+    public Integer getId() {
+        return this.id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getImagePath() {
+        return this.imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public User() {
+    }
+
+}
