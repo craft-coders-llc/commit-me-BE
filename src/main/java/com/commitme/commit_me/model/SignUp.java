@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -24,11 +25,12 @@ public class SignUp {
     private LocalDateTime signUpCreated_on;
 
     @ManyToMany
-    @JoinColumn(name = "user_id")
+    @JoinTable(name = "signup_user", joinColumns = @JoinColumn(name = "signup_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
 
     @ManyToMany
-    @JoinColumn(name = "event_id")
+    @JoinTable(name = "signup_event", joinColumns = @JoinColumn(name = "signup_id"), inverseJoinColumns = @JoinColumn(name = "event_id"))
+    private List<Event> events;
 
     public Integer getId() {
         return this.id;
@@ -61,8 +63,6 @@ public class SignUp {
     public void setEvents(List<Event> events) {
         this.events = events;
     }
-
-    private List<Event> events;
 
     public SignUp() {
     }
