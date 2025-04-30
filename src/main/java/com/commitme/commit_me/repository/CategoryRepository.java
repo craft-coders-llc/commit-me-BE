@@ -9,4 +9,6 @@ import com.commitme.commit_me.model.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer>{
 
+    Category findByCategory(String category);
+
 }
