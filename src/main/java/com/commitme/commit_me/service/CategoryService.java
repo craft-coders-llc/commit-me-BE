@@ -1,9 +1,10 @@
 package com.commitme.commit_me.service;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import com.commitme.commit_me.exceptions.CategoryAlreadyExistsException;
 import com.commitme.commit_me.model.Category;
 import com.commitme.commit_me.repository.CategoryRepository;
@@ -25,6 +26,10 @@ public class CategoryService {
         }
 
         return new ResponseEntity<>(categoryRepository.save(category), HttpStatus.CREATED);
+    }
+
+    public List<Category> getAllCategories() {
+        return this.categoryRepository.findAll();
     }
 
 }
