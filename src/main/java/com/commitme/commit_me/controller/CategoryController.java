@@ -13,7 +13,8 @@ import com.commitme.commit_me.service.CategoryService;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
+// import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -36,6 +37,12 @@ public class CategoryController {
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
     }
+    
+    @GetMapping("/categories/{type}")
+    public ResponseEntity<Object> getCategoryByType(@PathVariable String type) {
+        return this.categoryService.getCategoryByType(type);
+    }
+    
     
 
 }

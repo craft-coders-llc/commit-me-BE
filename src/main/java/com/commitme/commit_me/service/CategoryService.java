@@ -1,6 +1,7 @@
 package com.commitme.commit_me.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,12 @@ public class CategoryService {
 
     public List<Category> getAllCategories() {
         return this.categoryRepository.findAll();
+    }
+
+    public ResponseEntity<Object> getCategoryByType(String type) {
+        Optional<Category> categoryOptional = categoryRepository.findByType(type);
+        Category category = categoryOptional.get();
+        return ResponseEntity.ok(category);
     }
 
 }
