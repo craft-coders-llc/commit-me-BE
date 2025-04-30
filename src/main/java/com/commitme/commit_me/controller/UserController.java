@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.commitme.commit_me.exceptions.EmailAlreadyExistsException;
 import com.commitme.commit_me.model.User;
+import com.commitme.commit_me.repository.UserRepository;
 import com.commitme.commit_me.service.UserService;
 
 import jakarta.validation.Valid;
@@ -16,9 +18,8 @@ import jakarta.validation.Valid;
 public class UserController {
      private final UserService userService;
     
-     public UserController(UserService userService) {
+    public UserController(UserService userService) {
     this.userService = userService;
-
   }
 
   @PostMapping
