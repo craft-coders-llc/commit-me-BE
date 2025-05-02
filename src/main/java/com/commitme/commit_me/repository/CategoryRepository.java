@@ -12,6 +12,8 @@ public interface CategoryRepository extends JpaRepository<Category, Integer>{
 
     Category findByCategory(String category);
     Category findByType(String type);
+    @SuppressWarnings("null")
     Optional<Category> findById(Integer id);
+    Optional<Category> findByCategoryType(String type);
 
 }

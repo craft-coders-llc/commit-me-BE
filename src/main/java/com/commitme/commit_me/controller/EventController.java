@@ -23,7 +23,7 @@ public class EventController {
 
     @PostMapping
     public ResponseEntity<Object> createEvent (@Valid @RequestBody Event event) {
-        return eventService.createEvent(event, null, null);
+        return eventService.createEvent(event, null, null, null, null, null, null, null);
     }
     
 
