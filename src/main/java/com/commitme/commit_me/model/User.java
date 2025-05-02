@@ -13,6 +13,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -25,17 +26,19 @@ public class User {
     private Integer id;
 
     @Column
-    @NotBlank(message = "[ERROR!] El campo de nombre no puede estar vacio y tampoco tener espacios")
-    @Pattern(regexp = "^[^\\/:*?\\\"<>|]+$", message = "[ERROR!] No está permitido el uso de caracteres especiales")
-    @Size(max = 20, message = "[ERROR!] Máximo de 20 caracteres permitidos en este campo")
-    private String userName;
+    @NotBlank(message = "(!) ERROR: El campo de nombre no puede estar vacio y tampoco tener espacios")
+    @Pattern(regexp = "^[^\\/:*?\\\"<>|]+$", message = "(!) ERROR: No está permitido el uso de caracteres especiales")
+    @Size(max = 20, message = "(!) ERROR: Máximo de 20 caracteres permitidos en este campo")
+    private String username;
 
     @Column
-    @Email(message = "[ERROR!] Por favor, ingrese un formato válido de email")
-    @NotBlank(message = "[ERROR!] El campo de email no puede estar vacio y tampoco tener espacios")
-    @Size(max = 50, message = "[ERROR!] Máximo de 50 caracteres permitidos en este campo")
+    @Email(message = "(!) ERROR: Por favor, ingrese un formato válido de email")
+    @NotBlank(message = "(!) ERROR: El campo de email no puede estar vacio y tampoco tener espacios")
+    @Size(max = 50, message = "(!) ERROR: Máximo de 50 caracteres permitidos en este campo")
     private String email;
 
+    @NotBlank(message = "La contraseña no puede estar vacía")
+    @NotNull
     @Column
     private String password;
 
@@ -48,6 +51,18 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private List<SignUp> signUps;
 
+
+    public User() {
+    }
+
+    public User(Integer id, String username, String email, String password, String imagePath) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.imagePath = imagePath;
+    }
+
     public Integer getId() {
         return this.id;
     }
@@ -56,12 +71,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return this.userName;
+    public String getUsername() {
+        return this.username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -88,7 +103,6 @@ public class User {
         this.imagePath = imagePath;
     }
 
-    public User() {
-    }
+
 
 }
