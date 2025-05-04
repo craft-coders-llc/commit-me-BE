@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import com.commitme.commit_me.exceptions.EventDescriptionAlreadyExistsException;
 import com.commitme.commit_me.exceptions.EventNotFoundException;
 import com.commitme.commit_me.exceptions.EventTitleAlreadyExistsException;
@@ -44,6 +46,9 @@ public class EventService {
 
         event.setUser(userOptional.get());
         event.setCategory(categoryOptional.get());
+        event.setTime(time);
+        event.setDate(date);
+        event.setVenue(venue);
         return new ResponseEntity<>(eventRepository.save(event), HttpStatus.CREATED);
     }
 
@@ -64,8 +69,16 @@ public class EventService {
         return eventRepository.findByCategoryType(type);
     }
 
-    public Optional<Event> findbyTitle(String title){
+    public Optional<Event> getEventsbyTitle(String title){
         return eventRepository.findByTitle(title);
+    }
+
+    public Optional<Event> getEventsbyDate(LocalDate date){
+        return eventRepository.findByDate(date);
+    }
+
+    public Optional<List<Event>> getEventsbyUserCreator(Integer userId){
+        return Optional.ofNullable(eventRepository.findByUserCreator(userId));
     }
 
     public ResponseEntity<Object> updateEvent(Integer id, String title, String description, LocalDate date, LocalTime time, String venue, Event updateEvent){
@@ -86,6 +99,19 @@ public class EventService {
         
         return ResponseEntity.ok(existingEvent);
 
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public ResponseEntity<Object> deleteEvent(Integer id) {
+        Optional<Event> eventOptional = eventRepository.findById(id);
+
+        if(!eventOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        Event event = eventOptional.get();
+        eventRepository.deleteById(event.getId());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
