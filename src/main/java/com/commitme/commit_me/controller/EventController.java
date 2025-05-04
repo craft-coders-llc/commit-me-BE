@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.commitme.commit_me.model.Event;
 import com.commitme.commit_me.service.EventService;
 import jakarta.validation.Valid;
-
-import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;

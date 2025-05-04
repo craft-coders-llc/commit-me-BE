@@ -49,6 +49,7 @@ public class EventService {
         event.setTime(time);
         event.setDate(date);
         event.setVenue(venue);
+
         return new ResponseEntity<>(eventRepository.save(event), HttpStatus.CREATED);
     }
 
@@ -98,7 +99,6 @@ public class EventService {
         eventRepository.save(existingEvent);
         
         return ResponseEntity.ok(existingEvent);
-
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
