@@ -43,9 +43,9 @@ public class User {
     private String password;
 
     @Column
-    String imagePath = "path/to/your/image.jpg";
+    String imagePath;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Event> events;
 
     @ManyToMany(mappedBy = "users")
@@ -53,14 +53,6 @@ public class User {
 
 
     public User() {
-    }
-
-    public User(Integer id, String username, String email, String password, String imagePath) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.imagePath = imagePath;
     }
 
     public Integer getId() {

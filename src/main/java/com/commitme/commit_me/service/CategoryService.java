@@ -1,17 +1,17 @@
-// package com.commitme.commit_me.service;
+package com.commitme.commit_me.service;
 
-// import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Service;
 
-// import com.commitme.commit_me.repository.CategoryRepository;
+import com.commitme.commit_me.repository.CategoryRepository;
 
-// @Service
+@Service
 
-// public class CategoryService {
+public class CategoryService {
     
-//     private final CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-//     public CategoryService(CategoryRepository categoryRepository) {
-//         this.categoryRepository = categoryRepository;
-//     }
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
-// }
+}

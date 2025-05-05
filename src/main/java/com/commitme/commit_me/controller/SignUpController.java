@@ -1,6 +1,6 @@
-// package com.commitme.commit_me.controller;
+package com.commitme.commit_me.controller;
 
-// public class SignUpController {
+public class SignUpController {
     
-// }
+}
 
