@@ -31,6 +31,9 @@ public class Category {
     @OneToMany(mappedBy = "category") // tiene que ser null sin no hay categoria //comming soon si el espacio es null
     private List<Event> events;
 
+    public Category() {
+    }
+
     public Integer getId() {
         return this.id;
     }
@@ -47,7 +50,6 @@ public class Category {
         this.type = type;
     }
 
-    public Category() {
-    }
+
 
 }
