@@ -32,11 +32,10 @@ public class CategoryController {
         return categoryService.getAllCategories();
     }
     
-    @GetMapping("/categories/{type}")
+    @GetMapping("/{type}")
     public ResponseEntity<Object> getCategoryByType(@PathVariable String type) {
         return this.categoryService.getCategoryByType(type);
     }
-    
     
 
 }

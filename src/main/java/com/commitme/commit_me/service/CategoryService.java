@@ -20,7 +20,7 @@ public class CategoryService {
 
     public ResponseEntity<Object> createCategory(Category category) {
 
-        if (categoryRepository.findByCategory(category.getType()) != null) {
+        if (categoryRepository.findByType(category.getType()) != null) {
             throw new CategoryAlreadyExistsException("(!) ERROR: ya existe una categoría con el mismo nombre");
         }
 
@@ -38,8 +38,8 @@ public class CategoryService {
     }
 
     public ResponseEntity<Object> getCategoryById(Integer id){
-        Optional<Category> category = categoryRepository.findById(id);
-        return ResponseEntity.ok(category);
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
+        return ResponseEntity.ok(categoryOptional.get());
     }
 
 }
