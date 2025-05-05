@@ -38,8 +38,7 @@ public class CategoryService {
     }
 
     public ResponseEntity<Object> getCategoryById(Integer id){
-        Optional<Category> categoryOptional = categoryRepository.findById(id);
-        Category category = categoryOptional.get();
+        Optional<Category> category = categoryRepository.findById(id);
         return ResponseEntity.ok(category);
     }
 
