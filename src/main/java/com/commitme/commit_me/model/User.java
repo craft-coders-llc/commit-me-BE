@@ -17,7 +17,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
     @Id
     @SequenceGenerator(name = "user_id_sequence", sequenceName = "user_id_sequence", allocationSize = 1, initialValue = 1)
@@ -44,7 +44,7 @@ public class User {
     @Column
     String imagePath;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Event> events;
 
     @OneToMany(mappedBy = "user")
