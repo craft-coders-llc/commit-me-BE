@@ -6,6 +6,8 @@ import java.time.LocalTime;
 import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,12 +46,14 @@ public class Event {
 
     @Column
     @NotBlank(message = "(!) ERROR: el campo de fecha no pude estar vacío")
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    //@JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
 
     @Column
     @NotBlank(message = "(!) ERROR: el campo de hora no pude estar vacío")
-    @JsonFormat(pattern = "00:00")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    //@JsonFormat(pattern = "00:00")
     private LocalTime time;
 
     @Column
