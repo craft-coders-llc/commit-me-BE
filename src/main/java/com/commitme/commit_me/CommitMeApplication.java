@@ -9,6 +9,9 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class CommitMeApplication {
 
 	public static void main(String[] args) {
+		//quiero poner el encoder en un bean(?)
+		//esta en el grabación
+		//crear el metodo donde se crea el objeto
 
 		Dotenv dotenv = Dotenv.configure().load();
 		System.setProperty("DB_URL", dotenv.get("DB_URL"));

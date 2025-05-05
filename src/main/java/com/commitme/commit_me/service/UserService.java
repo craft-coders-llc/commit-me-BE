@@ -17,7 +17,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
-
+//usar constructor
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -34,7 +34,8 @@ public class UserService {
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
     }
-
+//crear un metodo de obtener eventos del usuario
+//string
     public ResponseEntity<Object> getUserById(Integer id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (!userOptional.isPresent()) {

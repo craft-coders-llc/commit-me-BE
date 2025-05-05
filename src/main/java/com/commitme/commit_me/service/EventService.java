@@ -78,8 +78,13 @@ public class EventService {
         return eventRepository.findByDate(date);
     }
 
-    public Optional<List<Event>> getEventsbyUserCreator(Integer userId){
-        return Optional.ofNullable(eventRepository.findByUserCreator(userId));
+    public Optional<List<Event>> getEventsbyUserCreator(String username){
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            return Optional.empty();
+        }
+        List<Event> events = eventRepository.findByUser(user);
+        return Optional.of(events);
     }
 
     public ResponseEntity<Object> updateEvent(Integer id, String title, String description, LocalDate date, LocalTime time, String venue, Event updateEvent){
