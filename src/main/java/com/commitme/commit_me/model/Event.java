@@ -1,8 +1,8 @@
 package com.commitme.commit_me.model;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -45,12 +45,12 @@ public class Event {
     @Column
     @NotBlank(message = "(!) ERROR: el campo de fecha no pude estar vacío")
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date date;
+    private LocalDate date;
 
     @Column
     @NotBlank(message = "(!) ERROR: el campo de hora no pude estar vacío")
     @JsonFormat(pattern = "00:00")
-    private Time time;
+    private LocalTime time;
 
     @Column
     @NotBlank(message = "(!) ERROR: el campo de la dirección no puede estar vacío")
@@ -76,6 +76,9 @@ public class Event {
 
     @ManyToMany(mappedBy = "events")
     private List<SignUp> signUps;
+
+    public Event() {
+    }
 
     public Category getCategory() {
         return this.category;
@@ -117,19 +120,19 @@ public class Event {
         this.description = description;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return this.date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Time getTime() {
+    public LocalTime getTime() {
         return this.time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
@@ -155,9 +158,6 @@ public class Event {
 
     public void setEventUpdated_on(LocalDateTime eventUpdated_on) {
         this.eventUpdated_on = eventUpdated_on;
-    }
-
-    public Event() {
     }
 
 }
