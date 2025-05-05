@@ -1,15 +1,13 @@
 package com.commitme.commit_me.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -24,13 +22,18 @@ public class SignUp {
     @CreationTimestamp
     private LocalDateTime signUpCreated_on;
 
-    @ManyToMany
-    @JoinTable(name = "signup_user", joinColumns = @JoinColumn(name = "signup_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @ManyToMany
-    @JoinTable(name = "signup_event", joinColumns = @JoinColumn(name = "signup_id"), inverseJoinColumns = @JoinColumn(name = "event_id"))
-    private List<Event> events;
+    @ManyToOne
+    @JoinColumn(name = "event_id", nullable = false)
+    private Event event;
+
+
+    public SignUp() {
+    }
+
 
     public Integer getId() {
         return this.id;
@@ -48,23 +51,22 @@ public class SignUp {
         this.signUpCreated_on = signUpCreated_on;
     }
 
-    public List<User> getUsers() {
-        return this.users;
-    }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
+    public User getUser() {
+        return user; }
 
-    public List<Event> getEvents() {
-        return this.events;
-    }
+    public void setUser(User user) {
+         this.user = user; }
 
-    public void setEvents(List<Event> events) {
-        this.events = events;
-    }
 
-    public SignUp() {
-    }
+
+    public Event getEvent() { 
+        return event; }
+
+    public void setEvent(Event event) {
+        this.event = event; }
+
+
+
 
 }
