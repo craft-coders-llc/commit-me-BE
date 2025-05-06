@@ -32,9 +32,9 @@ public class EventService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<Object> createEvent(Event event) {
-        Optional<User> userOptional = userRepository.getUserById(null);
-        Optional<Category> categoryOptional = categoryRepository.findById(null);
+    public ResponseEntity<Object> createEvent(Event event, Integer userId, Integer categoryId) {
+        Optional<User> userOptional = userRepository.getUserById(userId);
+        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
 
         if (event.getTitle() != null && eventRepository.findByTitle(event.getTitle()).isPresent()) {
             throw new EventTitleAlreadyExistsException("(!) ERROR: ya existe un evento con el mismo título");

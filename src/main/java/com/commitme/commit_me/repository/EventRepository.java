@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import com.commitme.commit_me.model.Category;
 import com.commitme.commit_me.model.Event;
 import com.commitme.commit_me.model.User;
 
@@ -18,6 +20,7 @@ public interface EventRepository extends JpaRepository<Event, Integer>{
     Optional<Event> findByTitle(String title);
     Optional<Event> findByDescription(String title);
     Optional<Event> findByDate(String date);
+    List<Event> findByCategory(Category category);
 
     @Query("SELECT e FROM Event e WHERE e.category.type = :type")
     List<Event> findByCategoryType(@Param("Type") String type);
