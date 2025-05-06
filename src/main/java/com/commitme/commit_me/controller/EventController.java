@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -46,6 +46,13 @@ public class EventController {
     public List<Event> getEventsByCategory(@PathVariable String type) {
         return eventService.getEventsByCategoryType(type);
     }
+
+    @GetMapping("/{title}")
+    public List<Event> getEventsByTitle(@PathVariable String title) {
+        return eventService.getEventsbyTitle(title);
+    }
+    
+    
     
     
     @PatchMapping("/{id}")

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.commitme.commit_me.exceptions.EventDescriptionAlreadyExistsException;
-import com.commitme.commit_me.exceptions.EventNotFoundException;
+//import com.commitme.commit_me.exceptions.EventNotFoundException;
 import com.commitme.commit_me.exceptions.EventTitleAlreadyExistsException;
 import com.commitme.commit_me.model.Category;
 import com.commitme.commit_me.model.Event;
@@ -36,7 +36,7 @@ public class EventService {
         Optional<User> userOptional = userRepository.getUserById(userId);
         Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
 
-        if (event.getTitle() != null && eventRepository.findByTitle(event.getTitle()).isPresent()) {
+        if (event.getTitle() != null && eventRepository.findUpdtByTitle(event.getTitle()).isPresent()) {
             throw new EventTitleAlreadyExistsException("(!) ERROR: ya existe un evento con el mismo título");
         }
 
@@ -67,7 +67,7 @@ public class EventService {
         return eventRepository.findByCategoryType(type);
     }
 
-    public Optional<Event> getEventsbyTitle(String title){
+    public List<Event> getEventsbyTitle(String title){
         return eventRepository.findByTitle(title);
     }
 
@@ -85,8 +85,7 @@ public class EventService {
     }
 
     public ResponseEntity<Object> updateEvent(Integer id, String title, String description, String date, String time, String venue, Event updateEvent){
-        Optional<Event> eventOptional = Optional.ofNullable(eventRepository.findByTitle(title)
-            .orElseThrow(() -> new EventNotFoundException("(!) ERROR: no se ha encontrado ningún evento con el título")));
+        Optional<Event> eventOptional = eventRepository.findUpdtByTitle(title);
 
         if(!eventOptional.isPresent()){
             return ResponseEntity.notFound().build();
