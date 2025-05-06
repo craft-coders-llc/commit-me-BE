@@ -49,8 +49,8 @@ public class EventController {
     }
     
     @PatchMapping("/{id}")
-    public ResponseEntity<Object> updateEvent(@PathVariable Integer id, @RequestBody Event updatedEvent){
-        return this.eventService.updateEvent(id, null, null, null, null, null, updatedEvent);
+    public ResponseEntity<Object> updateEvent(@PathVariable Integer id, @RequestBody Event updatedEvent) {
+        return eventService.updateEvent(id, updatedEvent);
     }
 
     @DeleteMapping("/{id}")

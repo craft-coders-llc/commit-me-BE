@@ -82,21 +82,40 @@ public class EventService {
         return Optional.of(events);
     }
 
-    public ResponseEntity<Object> updateEvent(Integer id, String title, String description, String date, String time, String venue, Event updateEvent){
-        Optional<Event> eventOptional = eventRepository.findUpdtByTitle(title);
+    //public ResponseEntity<Object> updateEvent(Integer id, String title, String description, String date, String time, String venue, Event updateEvent){
+    //    Optional<Event> eventOptional = eventRepository.findUpdtByTitle(title);
 
-        if(!eventOptional.isPresent()){
+        //if(!eventOptional.isPresent()){
+        //    return ResponseEntity.notFound().build();
+        //}
+        //Event existingEvent = eventOptional.get();
+
+        //existingEvent.setTitle(updateEvent.getTitle());
+        //existingEvent.setDescription(updateEvent.getDescription());
+        //existingEvent.setTime(time);
+        //existingEvent.setDate(date);
+        //existingEvent.setVenue(venue);
+        //eventRepository.save(existingEvent);
+        
+        //return ResponseEntity.ok(existingEvent);
+    //}
+
+    public ResponseEntity<Object> updateEvent(Integer id, Event updateEvent) {
+        Optional<Event> eventOptional = eventRepository.findById(id);
+    
+        if (!eventOptional.isPresent()) {
             return ResponseEntity.notFound().build();
         }
+    
         Event existingEvent = eventOptional.get();
-
-        existingEvent.setTitle(updateEvent.getTitle());
-        existingEvent.setDescription(updateEvent.getDescription());
-        existingEvent.setTime(time);
-        existingEvent.setDate(date);
-        existingEvent.setVenue(venue);
+    
+        if (updateEvent.getTitle() != null) existingEvent.setTitle(updateEvent.getTitle());
+        if (updateEvent.getDescription() != null) existingEvent.setDescription(updateEvent.getDescription());
+        if (updateEvent.getDate() != null) existingEvent.setDate(updateEvent.getDate());
+        if (updateEvent.getTime() != null) existingEvent.setTime(updateEvent.getTime());
+        if (updateEvent.getVenue() != null) existingEvent.setVenue(updateEvent.getVenue());
+    
         eventRepository.save(existingEvent);
-        
         return ResponseEntity.ok(existingEvent);
     }
 

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.commitme.commit_me.model.User;
 import com.commitme.commit_me.service.UserService;
@@ -41,8 +40,13 @@ public class UserController {
     return this.userService.getUserById(id);
   }
 
+  //@PostMapping("/{id}")
+  //public ResponseEntity<Object> updateUser(@PathVariable Integer id, @RequestParam User updateUser) {
+  //  return this.userService.updateUser(id, updateUser);
+  //}
+
   @PostMapping("/{id}")
-  public ResponseEntity<Object> updateUser(@PathVariable Integer id, @RequestParam User updateUser) {
+  public ResponseEntity<Object> updateUser(@PathVariable Integer id, @RequestBody User updateUser) {
     return this.userService.updateUser(id, updateUser);
   }
 
