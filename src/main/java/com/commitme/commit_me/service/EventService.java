@@ -1,7 +1,7 @@
 package com.commitme.commit_me.service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+//import java.time.LocalDate;
+//import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ public class EventService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<Object> createEvent(Event event, String title, String description, LocalDate date, LocalTime time, String venue, Integer userId, Integer categoryId) { //MIRAR QUE ESTÉ BIEN EL METODO FINDBYID DE USER
+    public ResponseEntity<Object> createEvent(Event event, String title, String description, String date, String time, String venue, Integer userId, Integer categoryId) { //MIRAR QUE ESTÉ BIEN EL METODO FINDBYID DE USER
         Optional<User> userOptional = userRepository.findById(userId);
         Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
 
@@ -74,7 +74,7 @@ public class EventService {
         return eventRepository.findByTitle(title);
     }
 
-    public Optional<Event> getEventsbyDate(LocalDate date){
+    public Optional<Event> getEventsbyDate(String date){
         return eventRepository.findByDate(date);
     }
 
@@ -87,7 +87,7 @@ public class EventService {
         return Optional.of(events);
     }
 
-    public ResponseEntity<Object> updateEvent(Integer id, String title, String description, LocalDate date, LocalTime time, String venue, Event updateEvent){
+    public ResponseEntity<Object> updateEvent(Integer id, String title, String description, String date, String time, String venue, Event updateEvent){
         Optional<Event> eventOptional = Optional.ofNullable(eventRepository.findByTitle(title)
             .orElseThrow(() -> new EventNotFoundException("(!) ERROR: no se ha encontrado ningún evento con el título")));
 
