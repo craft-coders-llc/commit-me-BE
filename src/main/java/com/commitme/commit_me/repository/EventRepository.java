@@ -21,8 +21,6 @@ public interface EventRepository extends JpaRepository<Event, Integer>{
     Optional<Event> findByDescription(String title);
     Optional<Event> findByDate(String date);
     List<Event> findByCategory(Category category);
-
-    @Query("SELECT e FROM Event e WHERE e.category.type = :type")
-    List<Event> findByCategoryType(@Param("Type") String type);
+    List<Event> findByCategoryType(String type);
 
 }
