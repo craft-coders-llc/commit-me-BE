@@ -1,8 +1,7 @@
 package com.commitme.commit_me.service;
 
-//import java.time.LocalDate;
-//import java.time.LocalTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.commitme.commit_me.exceptions.EventDescriptionAlreadyExistsException;
-//import com.commitme.commit_me.exceptions.EventNotFoundException;
 import com.commitme.commit_me.exceptions.EventTitleAlreadyExistsException;
 import com.commitme.commit_me.model.Category;
 import com.commitme.commit_me.model.Event;
@@ -54,21 +52,21 @@ public class EventService {
         return this.eventRepository.findAll();
     }
 
-    // public ResponseEntity<Object> getEventByCategoryType(String type) {
-    //     Optional<Category> categoryOptional = categoryRepository.findByCategoryType(type);
-    //     if(!categoryOptional.isPresent()) {
-    //         return ResponseEntity.notFound().build();
-    //     }
-    //     Category category = categoryOptional.get();
-    //     return ResponseEntity.ok(category);
-    // }
-
     public List<Event> getEventsByCategoryType(String type){
         return eventRepository.findByCategoryType(type);
     }
 
-    public List<Event> getEventsbyTitle(String title){
-        return eventRepository.findByTitle(title);
+    public List<Event> searchEventsByTitle(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            throw new IllegalArgumentException("(!) ERROR: El parámetro 'keyword' no puede estar vacío");
+        }
+
+        List<Event> result = eventRepository.findByTitleContainingIgnoreCase(keyword);
+        if (result.isEmpty()) {
+            throw new NoSuchElementException("(!) ERROR: No se encontraron eventos que coincidan con: " + keyword);
+        }
+
+        return result;
     }
 
     public Optional<Event> getEventsbyDate(String date){
