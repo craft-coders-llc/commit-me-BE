@@ -32,18 +32,12 @@ public class UserController {
   public List<User> getAllUsers () {
       return userService.getAllUsers();
   }
-  
 
   @GetMapping("/{id}")
 
   public ResponseEntity<Object> getUserById(@PathVariable Integer id) {
     return this.userService.getUserById(id);
   }
-
-  //@PostMapping("/{id}")
-  //public ResponseEntity<Object> updateUser(@PathVariable Integer id, @RequestParam User updateUser) {
-  //  return this.userService.updateUser(id, updateUser);
-  //}
 
   @PostMapping("/{id}")
   public ResponseEntity<Object> updateUser(@PathVariable Integer id, @RequestBody User updateUser) {

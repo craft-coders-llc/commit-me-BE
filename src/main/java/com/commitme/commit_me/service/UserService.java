@@ -12,7 +12,6 @@ import com.commitme.commit_me.repository.UserRepository;
 import jakarta.transaction.Transactional;
 
 @Service
-
 public class UserService {
 
     private final UserRepository userRepository;
@@ -61,7 +60,6 @@ public class UserService {
         existingUser.setImagePath(updateUser.getImagePath());
         userRepository.save(existingUser);
         return ResponseEntity.ok(existingUser);
-
     }
 
     @Transactional
