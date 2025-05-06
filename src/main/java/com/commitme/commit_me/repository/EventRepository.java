@@ -15,7 +15,6 @@ import com.commitme.commit_me.model.User;
 public interface EventRepository extends JpaRepository<Event, Integer>{
     
     List<Event> findByUser(User user);
-    //Event findByDate(String date);
     Optional<Event> findByTitle(String title);
     Optional<Event> findByDescription(String title);
     Optional<Event> findByDate(String date);

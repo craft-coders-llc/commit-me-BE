@@ -32,9 +32,9 @@ public class EventService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<Object> createEvent(Event event, String title, String description, String date, String time, String venue, Integer userId, Integer categoryId) { //MIRAR QUE ESTÉ BIEN EL METODO FINDBYID DE USER
-        Optional<User> userOptional = userRepository.findById(userId);
-        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+    public ResponseEntity<Object> createEvent(Event event) {
+        Optional<User> userOptional = userRepository.getUserById(null);
+        Optional<Category> categoryOptional = categoryRepository.findById(null);
 
         if (event.getTitle() != null && eventRepository.findByTitle(event.getTitle()).isPresent()) {
             throw new EventTitleAlreadyExistsException("(!) ERROR: ya existe un evento con el mismo título");
@@ -46,9 +46,6 @@ public class EventService {
 
         event.setUser(userOptional.get());
         event.setCategory(categoryOptional.get());
-        event.setTime(time);
-        event.setDate(date);
-        event.setVenue(venue);
 
         return new ResponseEntity<>(eventRepository.save(event), HttpStatus.CREATED);
     }
