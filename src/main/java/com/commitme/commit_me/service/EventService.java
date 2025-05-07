@@ -117,12 +117,12 @@ public class EventService {
         Optional<Event> eventOptional = eventRepository.findById(id);
 
         if(!eventOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("(!) ERROR: No existe un evento con el ID elegido");
         }
 
         Event event = eventOptional.get();
         eventRepository.deleteById(event.getId());
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.OK).body("El evento se ha eliminado correctamente");
     }
 
 }
