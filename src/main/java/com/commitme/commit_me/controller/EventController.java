@@ -47,6 +47,11 @@ public class EventController {
         List<Event> events = eventService.searchEventsByTitle(keyword);
         return ResponseEntity.ok(events);
     }
+
+    @GetMapping("/user/{id}")
+    public List<Event> getEventsByUserID(@PathVariable Integer id) {
+        return eventService.findByUserId(id);
+    }
     
     @PatchMapping("/{id}")
     public ResponseEntity<Object> updateEvent(@PathVariable Integer id, @RequestBody Event updatedEvent) {

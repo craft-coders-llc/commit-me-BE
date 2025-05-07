@@ -56,6 +56,10 @@ public class EventService {
         return eventRepository.findByCategoryType(type);
     }
 
+    public List<Event> findByUserId(Integer id){
+        return eventRepository.findByUserId(id);
+    }
+
     public List<Event> searchEventsByTitle(String keyword) {
         if (keyword == null || keyword.trim().isEmpty()) {
             throw new IllegalArgumentException("(!) ERROR: El parámetro 'keyword' no puede estar vacío");
