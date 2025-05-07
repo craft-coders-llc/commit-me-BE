@@ -1,13 +1,9 @@
 package com.commitme.commit_me.model;
 
-//import java.time.LocalDate;
 import java.time.LocalDateTime;
-//import java.time.LocalTime;
 import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-//import org.springframework.format.annotation.DateTimeFormat;
-//import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +15,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-//import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -35,7 +30,6 @@ public class Event {
     @Column
     @NotBlank(message = "(!) ERROR: el campo del título no puede estar vacío")
     @Size(max = 50, message = "(!) ERROR: el campo del título no puede tener más de 50 caracteres")
-    //@Pattern(regexp = "^[^\\/*<>|]$", message = "(!) ERROR: no está permitido el uso de ciertos caracteres especiales")
     private String title;
 
     @Column
@@ -45,14 +39,11 @@ public class Event {
 
     @Column
     @NotBlank(message = "(!) ERROR: el campo de fecha no pude estar vacío")
-    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    //@JsonFormat(pattern = "dd-MM-yyyy")
     private String date;
 
     @Column
     @NotBlank(message = "(!) ERROR: el campo de hora no pude estar vacío")
-    //@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    //@JsonFormat(pattern = "00:00")
+
     private String time;
 
     @Column

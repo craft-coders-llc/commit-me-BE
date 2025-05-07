@@ -30,11 +30,22 @@ public class EventService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public ResponseEntity<Object> createEvent(Event event, Integer categoryId) {
-        //Optional<User> userOptional = userRepository.getUserById(userId);
+        Optional<User> userOptional = userRepository.getUserById(event.getUser().getId());
         Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
 
-        if (event.getTitle() != null && eventRepository.findUpdtByTitle(event.getTitle()).isPresent()) {
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("(!) ERROR: El usuario con ID " + event.getUser().getId() + " no existe.");
+        }
+
+        if (!categoryOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("(!) ERROR: La categoría con ID " + categoryId + " no existe.");
+        }
+
+        if (event.getTitle() != null && !eventRepository.findByTitle(event.getTitle()).isEmpty()) {
             throw new EventTitleAlreadyExistsException("(!) ERROR: ya existe un evento con el mismo título");
         }
 
@@ -42,7 +53,7 @@ public class EventService {
             throw new EventDescriptionAlreadyExistsException("(!) ERROR: ya existe un evento con la misma descripción");
         }
 
-        //event.setUser(userOptional.get());
+        event.setUser(userOptional.get());
         event.setCategory(categoryOptional.get());
 
         return new ResponseEntity<>(eventRepository.save(event), HttpStatus.CREATED);
@@ -58,7 +69,7 @@ public class EventService {
 
     public List<Event> searchEventsByTitle(String keyword) {
         if (keyword == null || keyword.trim().isEmpty()) {
-            throw new IllegalArgumentException("(!) ERROR: El parámetro 'keyword' no puede estar vacío");
+            throw new IllegalArgumentException("(!) ERROR: añade una palabra-clave para buscar el evento");
         }
 
         List<Event> result = eventRepository.findByTitleContainingIgnoreCase(keyword);
@@ -81,24 +92,6 @@ public class EventService {
         List<Event> events = eventRepository.findByUser(user);
         return Optional.of(events);
     }
-
-    //public ResponseEntity<Object> updateEvent(Integer id, String title, String description, String date, String time, String venue, Event updateEvent){
-    //    Optional<Event> eventOptional = eventRepository.findUpdtByTitle(title);
-
-        //if(!eventOptional.isPresent()){
-        //    return ResponseEntity.notFound().build();
-        //}
-        //Event existingEvent = eventOptional.get();
-
-        //existingEvent.setTitle(updateEvent.getTitle());
-        //existingEvent.setDescription(updateEvent.getDescription());
-        //existingEvent.setTime(time);
-        //existingEvent.setDate(date);
-        //existingEvent.setVenue(venue);
-        //eventRepository.save(existingEvent);
-        
-        //return ResponseEntity.ok(existingEvent);
-    //}
 
     public ResponseEntity<Object> updateEvent(Integer id, Event updateEvent) {
         Optional<Event> eventOptional = eventRepository.findById(id);
