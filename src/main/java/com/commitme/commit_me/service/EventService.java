@@ -56,6 +56,10 @@ public class EventService {
         return eventRepository.findByCategoryType(type);
     }
 
+    public List<Event> findByUserId(Integer id){
+        return eventRepository.findByUserId(id);
+    }
+
     public List<Event> searchEventsByTitle(String keyword) {
         if (keyword == null || keyword.trim().isEmpty()) {
             throw new IllegalArgumentException("(!) ERROR: El parámetro 'keyword' no puede estar vacío");
@@ -96,6 +100,7 @@ public class EventService {
         if (updateEvent.getDate() != null) existingEvent.setDate(updateEvent.getDate());
         if (updateEvent.getTime() != null) existingEvent.setTime(updateEvent.getTime());
         if (updateEvent.getVenue() != null) existingEvent.setVenue(updateEvent.getVenue());
+        if (updateEvent.getMaxAttendees() != null) existingEvent.setMaxAttendees(updateEvent.getMaxAttendees());
     
         eventRepository.save(existingEvent);
         return ResponseEntity.ok(existingEvent);

@@ -19,14 +19,12 @@ import com.commitme.commit_me.model.User;
 public interface EventRepository extends JpaRepository<Event, Integer>{
     
     List<Event> findByUser(User user);
+    List<Event> findByUserId(Integer id);
     Optional<Event> findUpdtByTitle(String title);
     Optional<Event> findByDescription(String title);
     Optional<Event> findByDate(String date);
     List<Event> findByCategory(Category category);
     List<Event> findByCategoryType(String type);
-    
     List<Event> findByTitle(String title);
-
     List<Event> findByTitleContainingIgnoreCase(String keyword);
-
 }
