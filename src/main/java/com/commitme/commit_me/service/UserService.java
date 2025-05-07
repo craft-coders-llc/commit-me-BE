@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.commitme.commit_me.exceptions.EmailAlreadyExistsException;
 import com.commitme.commit_me.model.User;
@@ -16,7 +15,7 @@ import jakarta.transaction.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+    // private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 //usar constructor
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -56,7 +55,7 @@ public class UserService {
 
         existingUser.setUsername(updateUser.getUsername());
         existingUser.setEmail(updateUser.getEmail());
-        existingUser.setPassword(encoder.encode(updateUser.getPassword()));
+        // existingUser.setPassword(encoder.encode(updateUser.getPassword()));
         existingUser.setImagePath(updateUser.getImagePath());
         userRepository.save(existingUser);
         return ResponseEntity.ok(existingUser);

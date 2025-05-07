@@ -18,8 +18,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class ImageService {
 
-        private ImageRepository imageRepository;
-        private final String FOLDER_PATH = "C:\\Users\\ximen\\Desktop\\proyectosFactoria\\commit-me-BE\\ImagesUpload";
+    private final ImageRepository imageRepository;
+    private final String FOLDER_PATH = System.getProperty("user.dir") + File.separator + "ImagesUpload";
  
         public String uploadImage(MultipartFile file) throws IOException {
             String filePath = FOLDER_PATH + file.getOriginalFilename();
