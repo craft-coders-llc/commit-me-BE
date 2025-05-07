@@ -30,8 +30,8 @@ public class EventService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<Object> createEvent(Event event, Integer userId, Integer categoryId) {
-        Optional<User> userOptional = userRepository.getUserById(userId);
+    public ResponseEntity<Object> createEvent(Event event, Integer categoryId) {
+        //Optional<User> userOptional = userRepository.getUserById(userId);
         Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
 
         if (event.getTitle() != null && eventRepository.findUpdtByTitle(event.getTitle()).isPresent()) {
@@ -42,7 +42,7 @@ public class EventService {
             throw new EventDescriptionAlreadyExistsException("(!) ERROR: ya existe un evento con la misma descripción");
         }
 
-        event.setUser(userOptional.get());
+        //event.setUser(userOptional.get());
         event.setCategory(categoryOptional.get());
 
         return new ResponseEntity<>(eventRepository.save(event), HttpStatus.CREATED);
