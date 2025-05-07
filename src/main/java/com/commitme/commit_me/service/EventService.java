@@ -101,6 +101,7 @@ public class EventService {
         if (updateEvent.getTime() != null) existingEvent.setTime(updateEvent.getTime());
         if (updateEvent.getVenue() != null) existingEvent.setVenue(updateEvent.getVenue());
         if (updateEvent.getMaxAttendees() != null) existingEvent.setMaxAttendees(updateEvent.getMaxAttendees());
+        if (updateEvent.getImage() != null) existingEvent.setImage(updateEvent.getImage());
     
         eventRepository.save(existingEvent);
         return ResponseEntity.ok(existingEvent);

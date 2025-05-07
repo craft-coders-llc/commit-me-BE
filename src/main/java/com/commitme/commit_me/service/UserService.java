@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.commitme.commit_me.exceptions.EmailAlreadyExistsException;
+import com.commitme.commit_me.exceptions.InvalidCredentialsException;
 import com.commitme.commit_me.model.User;
 import com.commitme.commit_me.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -73,5 +74,14 @@ public class UserService {
         return ResponseEntity.status(HttpStatus.OK).body("El usuario se ha eliminado correctamente");
     }
 
+    // public Optional<User> authenticate(String username, String password) {
+    //     return userRepository.findByUsernameAndPassword(username, password);
+    // }
 
+    public User authenticate(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password)
+                .orElseThrow(() -> new InvalidCredentialsException("username o contraseña incorrecto(s)"));
+    }
 }
+
+

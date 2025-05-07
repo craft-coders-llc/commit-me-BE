@@ -45,9 +45,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
     public ResponseEntity<String> handleGeneric(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("(!) ERROR: Ocurrió un error inesperado");
     }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<String> handleInvalidCredentials(InvalidCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("(!) ERROR: " + ex.getMessage());
+    }
 }
 
-
-
-    
 
