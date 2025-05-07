@@ -66,11 +66,11 @@ public class UserService {
     public ResponseEntity<Object> deleteUser(Integer id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (!userOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("(!) ERROR: No existe un usuario con el ID elegido");
         }
         User user = userOptional.get();
         userRepository.deleteById(user.getId());
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Se ha eliminado correctamente");
+        return ResponseEntity.status(HttpStatus.OK).body("El usuario se ha eliminado correctamente");
     }
 
 

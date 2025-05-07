@@ -82,24 +82,6 @@ public class EventService {
         return Optional.of(events);
     }
 
-    //public ResponseEntity<Object> updateEvent(Integer id, String title, String description, String date, String time, String venue, Event updateEvent){
-    //    Optional<Event> eventOptional = eventRepository.findUpdtByTitle(title);
-
-        //if(!eventOptional.isPresent()){
-        //    return ResponseEntity.notFound().build();
-        //}
-        //Event existingEvent = eventOptional.get();
-
-        //existingEvent.setTitle(updateEvent.getTitle());
-        //existingEvent.setDescription(updateEvent.getDescription());
-        //existingEvent.setTime(time);
-        //existingEvent.setDate(date);
-        //existingEvent.setVenue(venue);
-        //eventRepository.save(existingEvent);
-        
-        //return ResponseEntity.ok(existingEvent);
-    //}
-
     public ResponseEntity<Object> updateEvent(Integer id, Event updateEvent) {
         Optional<Event> eventOptional = eventRepository.findById(id);
     
@@ -124,12 +106,12 @@ public class EventService {
         Optional<Event> eventOptional = eventRepository.findById(id);
 
         if(!eventOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("(!) ERROR: No existe un evento con el ID elegido");
         }
 
         Event event = eventOptional.get();
         eventRepository.deleteById(event.getId());
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.OK).body("El evento se ha eliminado correctamente");
     }
 
 }

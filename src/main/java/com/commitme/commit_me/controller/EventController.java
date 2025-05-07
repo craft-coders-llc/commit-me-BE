@@ -26,7 +26,7 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @PostMapping("/user/{userId}")
+    @PostMapping("/{userId}")
     public ResponseEntity<Object> createEvent (@PathVariable Integer userId, @Valid @RequestBody Event event) {
         Integer categoryId = event.getCategory().getId();
         return eventService.createEvent(event, userId, categoryId);
@@ -54,7 +54,7 @@ public class EventController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteEvent(@PathVariable Integer id) {
+    public ResponseEntity<Object> deleteEvent(@PathVariable @Valid Integer id) {
         return this.eventService.deleteEvent(id);
     }
 
