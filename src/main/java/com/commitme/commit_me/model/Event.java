@@ -1,13 +1,9 @@
 package com.commitme.commit_me.model;
 
-//import java.time.LocalDate;
 import java.time.LocalDateTime;
-//import java.time.LocalTime;
 import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-//import org.springframework.format.annotation.DateTimeFormat;
-//import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,8 +14,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-//import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -45,20 +42,21 @@ public class Event {
 
     @Column
     @NotBlank(message = "(!) ERROR: el campo de fecha no pude estar vacío")
-    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    //@JsonFormat(pattern = "dd-MM-yyyy")
     private String date;
 
     @Column
     @NotBlank(message = "(!) ERROR: el campo de hora no pude estar vacío")
-    //@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    //@JsonFormat(pattern = "00:00")
     private String time;
 
     @Column
     @NotBlank(message = "(!) ERROR: el campo de la dirección no puede estar vacío")
     @Size(max = 100, message = "(!) ERROR: el campo de la dirección no puede tener más de 100 caracteres")
     private String venue;
+
+    @Column
+    @NotNull(message = "(!) ERROR: el campo del máximo de participantes no puede estar vacío")
+    @Min(value = 1, message = "(!) ERROR: el campo del máximo de participantes debe tener un valor mínimo de 1")
+    private Integer maxAttendees;
 
     @Column
     private String image;
@@ -153,6 +151,14 @@ public class Event {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setMaxAttendees(Integer maxAttendees){
+        this.maxAttendees = maxAttendees;
+    }
+
+    public Integer getMaxAttendees(){
+        return this.maxAttendees;
     }
 
     public LocalDateTime getEventUpdated_on() {
