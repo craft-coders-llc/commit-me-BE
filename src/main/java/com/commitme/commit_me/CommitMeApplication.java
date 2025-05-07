@@ -1,7 +1,6 @@
 package com.commitme.commit_me;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import io.github.cdimascio.dotenv.Dotenv;
 
 

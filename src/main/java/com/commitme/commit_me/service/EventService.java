@@ -1,8 +1,7 @@
 package com.commitme.commit_me.service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.commitme.commit_me.exceptions.EventDescriptionAlreadyExistsException;
-import com.commitme.commit_me.exceptions.EventNotFoundException;
 import com.commitme.commit_me.exceptions.EventTitleAlreadyExistsException;
 import com.commitme.commit_me.model.Category;
 import com.commitme.commit_me.model.Event;
@@ -32,11 +30,11 @@ public class EventService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<Object> createEvent(Event event, String title, String description, LocalDate date, LocalTime time, String venue, Integer userId, Integer categoryId) { //MIRAR QUE ESTÉ BIEN EL METODO FINDBYID DE USER
-        Optional<User> userOptional = userRepository.findById(userId);
+    public ResponseEntity<Object> createEvent(Event event, Integer userId, Integer categoryId) {
+        Optional<User> userOptional = userRepository.getUserById(userId);
         Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
 
-        if (event.getTitle() != null && eventRepository.findByTitle(event.getTitle()).isPresent()) {
+        if (event.getTitle() != null && eventRepository.findUpdtByTitle(event.getTitle()).isPresent()) {
             throw new EventTitleAlreadyExistsException("(!) ERROR: ya existe un evento con el mismo título");
         }
 
@@ -46,9 +44,6 @@ public class EventService {
 
         event.setUser(userOptional.get());
         event.setCategory(categoryOptional.get());
-        event.setTime(time);
-        event.setDate(date);
-        event.setVenue(venue);
 
         return new ResponseEntity<>(eventRepository.save(event), HttpStatus.CREATED);
     }
@@ -57,24 +52,24 @@ public class EventService {
         return this.eventRepository.findAll();
     }
 
-    // public ResponseEntity<Object> getEventByCategoryType(String type) {
-    //     Optional<Category> categoryOptional = categoryRepository.findByCategoryType(type);
-    //     if(!categoryOptional.isPresent()) {
-    //         return ResponseEntity.notFound().build();
-    //     }
-    //     Category category = categoryOptional.get();
-    //     return ResponseEntity.ok(category);
-    // }
-
     public List<Event> getEventsByCategoryType(String type){
         return eventRepository.findByCategoryType(type);
     }
 
-    public Optional<Event> getEventsbyTitle(String title){
-        return eventRepository.findByTitle(title);
+    public List<Event> searchEventsByTitle(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            throw new IllegalArgumentException("(!) ERROR: El parámetro 'keyword' no puede estar vacío");
+        }
+
+        List<Event> result = eventRepository.findByTitleContainingIgnoreCase(keyword);
+        if (result.isEmpty()) {
+            throw new NoSuchElementException("(!) ERROR: No se encontraron eventos que coincidan con: " + keyword);
+        }
+
+        return result;
     }
 
-    public Optional<Event> getEventsbyDate(LocalDate date){
+    public Optional<Event> getEventsbyDate(String date){
         return eventRepository.findByDate(date);
     }
 
@@ -87,22 +82,40 @@ public class EventService {
         return Optional.of(events);
     }
 
-    public ResponseEntity<Object> updateEvent(Integer id, String title, String description, LocalDate date, LocalTime time, String venue, Event updateEvent){
-        Optional<Event> eventOptional = Optional.ofNullable(eventRepository.findByTitle(title)
-            .orElseThrow(() -> new EventNotFoundException("(!) ERROR: no se ha encontrado ningún evento con el título")));
+    //public ResponseEntity<Object> updateEvent(Integer id, String title, String description, String date, String time, String venue, Event updateEvent){
+    //    Optional<Event> eventOptional = eventRepository.findUpdtByTitle(title);
 
-        if(!eventOptional.isPresent()){
+        //if(!eventOptional.isPresent()){
+        //    return ResponseEntity.notFound().build();
+        //}
+        //Event existingEvent = eventOptional.get();
+
+        //existingEvent.setTitle(updateEvent.getTitle());
+        //existingEvent.setDescription(updateEvent.getDescription());
+        //existingEvent.setTime(time);
+        //existingEvent.setDate(date);
+        //existingEvent.setVenue(venue);
+        //eventRepository.save(existingEvent);
+        
+        //return ResponseEntity.ok(existingEvent);
+    //}
+
+    public ResponseEntity<Object> updateEvent(Integer id, Event updateEvent) {
+        Optional<Event> eventOptional = eventRepository.findById(id);
+    
+        if (!eventOptional.isPresent()) {
             return ResponseEntity.notFound().build();
         }
+    
         Event existingEvent = eventOptional.get();
-
-        existingEvent.setTitle(updateEvent.getTitle());
-        existingEvent.setDescription(updateEvent.getDescription());
-        existingEvent.setTime(time);
-        existingEvent.setDate(date);
-        existingEvent.setVenue(venue);
+    
+        if (updateEvent.getTitle() != null) existingEvent.setTitle(updateEvent.getTitle());
+        if (updateEvent.getDescription() != null) existingEvent.setDescription(updateEvent.getDescription());
+        if (updateEvent.getDate() != null) existingEvent.setDate(updateEvent.getDate());
+        if (updateEvent.getTime() != null) existingEvent.setTime(updateEvent.getTime());
+        if (updateEvent.getVenue() != null) existingEvent.setVenue(updateEvent.getVenue());
+    
         eventRepository.save(existingEvent);
-        
         return ResponseEntity.ok(existingEvent);
     }
 
