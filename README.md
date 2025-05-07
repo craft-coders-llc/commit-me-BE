@@ -50,8 +50,10 @@ La API permite:
 - **Crear un usuario:** Permite la creación de un nuevo usuario con nombre de usuario y correo electrónico (sin necesidad de autenticación o autorización en esta fase).
 - **Actualizar un usuario**
 - **Eliminar un usuario**
-- **Relación Usuario-Artículo (Uno-a-Muchos):** Un usuario puede crear y tener múltiples artículos asociados.
-- **Relación Artículo-Usuario (Muchos-a-Uno):** Cada artículo pertenece a un único usuario creador.
+
+### Login
+En la primera etapa del desarrollo, hemos implementado un login sencillo y sin encriptación, que se pretende implementar con el BCRYPT más adelante.
+Además, para próximos sprints, deseamos implementar el Json Web-Token (JWT) para proteger eficazmente los datos sensibles de los usuarios.
 
 ### ✅ Validaciones
 Los manejos de excepciones y validaciones se están haciendo de las siguientes maneras:
