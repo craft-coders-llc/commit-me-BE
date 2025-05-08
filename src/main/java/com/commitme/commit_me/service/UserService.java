@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.commitme.commit_me.exceptions.EmailAlreadyExistsException;
 import com.commitme.commit_me.exceptions.InvalidCredentialsException;
@@ -16,8 +15,7 @@ import jakarta.transaction.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-    //private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
-//usar constructor
+
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -34,8 +32,7 @@ public class UserService {
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
     }
-//crear un metodo de obtener eventos del usuario
-//string
+
     public ResponseEntity<Object> getUserById(Integer id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (!userOptional.isPresent()) {
@@ -56,7 +53,6 @@ public class UserService {
 
         existingUser.setUsername(updateUser.getUsername());
         existingUser.setEmail(updateUser.getEmail());
-        //existingUser.setPassword(encoder.encode(updateUser.getPassword()));
         existingUser.setPassword(updateUser.getPassword());
         existingUser.setImagePath(updateUser.getImagePath());
         userRepository.save(existingUser);
@@ -73,10 +69,6 @@ public class UserService {
         userRepository.deleteById(user.getId());
         return ResponseEntity.status(HttpStatus.OK).body("El usuario se ha eliminado correctamente");
     }
-
-    // public Optional<User> authenticate(String username, String password) {
-    //     return userRepository.findByUsernameAndPassword(username, password);
-    // }
 
     public User authenticate(String username, String password) {
         return userRepository.findByUsernameAndPassword(username, password)

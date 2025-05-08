@@ -50,6 +50,4 @@ public class Category {
         this.type = type;
     }
 
-
-
 }

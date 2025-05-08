@@ -2,17 +2,13 @@ package com.commitme.commit_me.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.commitme.commit_me.model.SignUp;
 import com.commitme.commit_me.service.SignUpService;
-
 import jakarta.validation.Valid;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
 @RequestMapping("api/v1/signups")
@@ -31,6 +27,5 @@ public class SignUpController {
         return signUpService.createSignup(signup, eventID, eventID, userID);
     }
     
-
 }
 

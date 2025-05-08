@@ -32,7 +32,6 @@ public class Event {
     @Column
     @NotBlank(message = "(!) ERROR: el campo del título no puede estar vacío")
     @Size(max = 50, message = "(!) ERROR: el campo del título no puede tener más de 50 caracteres")
-    //@Pattern(regexp = "^[^\\/*<>|]$", message = "(!) ERROR: no está permitido el uso de ciertos caracteres especiales")
     private String title;
 
     @Column

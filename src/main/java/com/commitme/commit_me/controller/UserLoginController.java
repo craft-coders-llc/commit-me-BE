@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.commitme.commit_me.dto.LoginRequest;
 import com.commitme.commit_me.exceptions.InvalidCredentialsException;
 import com.commitme.commit_me.model.User;
@@ -21,13 +20,6 @@ public class UserLoginController {
     UserLoginController(UserService userService) {
         this.userService = userService;
     }
-    
-    // @PostMapping("/login")
-    // public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-    //     return userService.authenticate(request.getUsername(), request.getPassword())
-    //             .map(user -> ResponseEntity.ok("Login exitoso del usuario " + user.getUsername()))
-    //             .orElseGet(() -> ResponseEntity.status(401).body("(!) ERROR: username o contraseña incorrecto(s)"));
-    // }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
