@@ -60,6 +60,9 @@ Los manejos de excepciones y validaciones se están haciendo de las siguientes m
 - **en las entidades**: a través de las etiquetas de Spring Boot como @Size, @NotNull, @NotBlank, entre otros.
 - **en el exception handler**: hay un archivo de control de excepciones llamado GlobalExceptionHandler que hace el manejo de excepciones con control de datos presentes en la DB.
 
+### ⚠️ Importante!
+>**Este frontend se conecta con un frontend en ReactJS que debe estar activo para la funcionalidad completa.**
+
 ## 🔗 Información adicional
 🎨 Código fuente: [Commit-Me Frontend](https://github.com/craft-coders-llc/commit-me-FE) <br>
 📂 Código fuente Backend: [Commit-Me Backend](https://github.com/craft-coders-llc/commit-me-BE)
